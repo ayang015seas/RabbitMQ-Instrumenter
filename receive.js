@@ -1,3 +1,8 @@
+/*
+  This is an express version of a possible prometheus server
+  WIP 
+*/
+
 var amqp = require('amqplib/callback_api');
 var express = require('express');
 
@@ -11,7 +16,6 @@ amqp.connect('amqp://localhost', function(error0, connection) {
         if (error1) {
             throw error1;
         }
-
         var queue = 'hello';
 
         channel.assertQueue(queue, {
