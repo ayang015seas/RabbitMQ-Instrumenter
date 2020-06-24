@@ -4,6 +4,7 @@
 import pika
 #from random import seed
 import random
+import threading
 
 #seed(1)
 r1 = random.randint(0, 10)
@@ -13,14 +14,20 @@ connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 
 # Send message
-channel.queue_declare(queue='hello')
-channel.basic_publish(exchange='',
-	routing_key='hello',
-	body= str(3.0))
+def send():
+	threading.Timer(2.0, send).start()
+	r2 = random.randint(0, 10)
+	channel.queue_declare(queue='hello')
+	channel.basic_publish(exchange='',
+		routing_key='hello',
+		body= str(r2))
+	print("Sent")
 
-print(" Sent Hello World")
+send()
+
+print("Finished Script")
 #print(random())
 print(r1)
 
-connection.close()
+# connection.close()
 
